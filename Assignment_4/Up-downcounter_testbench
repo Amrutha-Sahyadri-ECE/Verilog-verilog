@@ -1,0 +1,38 @@
+`timescale 1ns/1ns
+
+module tb;
+    logic clk, rst, up;
+    logic [3:0] count;
+
+    // DUT
+    up_down_counter dut (
+        .clk(clk),
+        .rst(rst),
+        .up(up),
+        .count(count)
+    );
+
+    // Clock
+    initial clk = 0;
+    always #5 clk = ~clk;
+
+    // Stimulus
+    initial begin
+        $dumpfile("wave.vcd");
+        $dumpvars(0, tb);
+
+        rst = 1; up = 0;
+        #10;
+        rst = 0;
+
+        // Count up
+        up = 1;
+        #50;
+
+        // Count down
+        up = 0;
+        #50;
+
+        $finish;
+    end
+endmodule
