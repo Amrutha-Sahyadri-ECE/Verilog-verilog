@@ -1,0 +1,32 @@
+`timescale 1ns/1ns
+
+module tb_adder;
+    logic a, b, cin;
+    logic sum, cout;
+
+    // Instantiate the full adder
+    adder uut (
+        .a(a),
+        .b(b),
+        .cin(cin),
+        .sum(sum),
+        .cout(cout)
+    );
+
+    initial begin
+        $dumpfile("wave.vcd");     // Waveform output file
+        $dumpvars(0, tb_adder);
+
+        // Apply all input combinations with some delay between them
+        a = 0; b = 0; cin = 0; #10;
+        a = 0; b = 0; cin = 1; #10;
+        a = 0; b = 1; cin = 0; #10;
+        a = 0; b = 1; cin = 1; #10;
+        a = 1; b = 0; cin = 0; #10;
+        a = 1; b = 0; cin = 1; #10;
+        a = 1; b = 1; cin = 0; #10;
+        a = 1; b = 1; cin = 1; #10;
+
+        $finish;
+    end
+endmodule
